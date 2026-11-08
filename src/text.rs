@@ -18,8 +18,7 @@ pub(crate) fn decode(data: &[u8]) -> Result<String, String> {
         [0xef, 0xbb, 0xbf, rest @ ..] => return utf8(rest),
         [0xff, 0xfe, rest @ ..] | [0xfe, 0xff, rest @ ..] => {
             let be = data.first() == Some(&0xfe);
-            let units = rest.chunks_exact(2).map(|c| {
-                let pair = [c[0], c[1]];
+            let units = rest.as_chunks::<2>().0.iter().map(|&pair| {
                 if be {
                     u16::from_be_bytes(pair)
                 } else {
