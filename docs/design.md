@@ -7,7 +7,7 @@ MusicXML is the format notation programs exchange scores in. This plugin (#223 i
 - **Which parts get tablature.** Parts the file marks as guitars or basses get strings and show their tablature. Every other pitched part (a melody, a piano, a voice) also gets a six-string guitar's strings, so OxiGuitar fingers it as it opens (#157), but shows notation only until the user turns its tablature on in the Track tab. Drums get no strings.
 - **The library.** MusicXML is read and written with the musicxml crate (1.1.2, MIT), as MusicXML 4.0 is the format's latest release.
 - **What is written.** MusicXML 4.0, uncompressed and compressed, each fretted staff as a notation staff and a tablature staff with the string and fret of every note, so programs that read tablature (OxiGuitar itself included) keep the fingering.
-- **Recognising the files** needed a core change, plugin interface 1.7 (oxiguitar#253): signatures that look at an XML file's first element (`xml_root`) and at the first element of a ZIP container's root file (`container_root`), since `.mxl` and MuseScore's `.mscz` have the same ZIP layout. A small core release, v0.18.0, comes before this plugin's first release.
+- **Recognising the files** needed a core change, plugin interface 1.7 (oxiguitar#253): signatures that look at an XML file's first element (`xml_root`) and at the first element of a ZIP container's root file (`container_root`), since `.mxl` and MuseScore's `.mscz` have the same ZIP layout. It came with OxiGuitar 0.18.0 (9 Nov 2026), released before this plugin, which depends on the tag `v0.18.0`.
 
 ## The library, and what is added on top of it
 
