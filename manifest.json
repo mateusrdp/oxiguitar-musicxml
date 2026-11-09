@@ -1,0 +1,36 @@
+{
+  "interface": "1.7",
+  "id": "oxiguitar.musicxml",
+  "name": "MusicXML",
+  "version": "0.0.0",
+  "description": "Reads and writes MusicXML (.musicxml, .xml) and compressed MusicXML (.mxl) files.",
+  "authors": ["Mateus Rocha de Paula", "The OxiGuitar contributors"],
+  "license": "GPL-3.0-or-later",
+  "homepage": "https://github.com/mateusrdp/oxiguitar-musicxml",
+  "formats": [
+    {
+      "id": "musicxml",
+      "name": "MusicXML",
+      "extensions": ["musicxml", "xml"],
+      "media_types": ["application/vnd.recordare.musicxml+xml"],
+      "read": true,
+      "write": true,
+      "signatures": [
+        { "xml_root": "score-partwise" },
+        { "xml_root": "score-timewise" }
+      ]
+    },
+    {
+      "id": "mxl",
+      "name": "Compressed MusicXML",
+      "extensions": ["mxl"],
+      "media_types": ["application/vnd.recordare.musicxml"],
+      "read": true,
+      "write": true,
+      "signatures": [
+        { "container_root": "score-partwise" },
+        { "container_root": "score-timewise" }
+      ]
+    }
+  ]
+}

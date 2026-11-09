@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- OxiGuitar's own MusicXML test file: written by hand for the reader's
+     tests, free to use like the rest of the repository. -->
+<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 4.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
+<score-partwise version="4.0">
+  <work>
+    <work-title>OxiGuitar Test Song</work-title>
+  </work>
+  <movement-title>For the MusicXML reader</movement-title>
+  <identification>
+    <creator type="composer">The OxiGuitar contributors</creator>
+    <creator type="lyricist">Nobody in particular</creator>
+    <creator type="arranger">A. Ranger</creator>
+    <rights>CC0</rights>
+  </identification>
+  <part-list>
+    <score-part id="P1">
+      <part-name>Guitar</part-name>
+      <part-abbreviation>Gtr.</part-abbreviation>
+      <score-instrument id="P1-I1">
+        <instrument-name>Classical Guitar</instrument-name>
+        <instrument-sound>pluck.guitar.nylon-string</instrument-sound>
+      </score-instrument>
+      <midi-instrument id="P1-I1">
+        <midi-channel>1</midi-channel>
+        <midi-program>25</midi-program>
+        <volume>80</volume>
+        <pan>-45</pan>
+      </midi-instrument>
+    </score-part>
+    <score-part id="P2">
+      <part-name>Flute</part-name>
+      <midi-instrument id="P2-I1">
+        <midi-channel>2</midi-channel>
+        <midi-program>74</midi-program>
+      </midi-instrument>
+    </score-part>
+    <score-part id="P3">
+      <part-name>Drumset</part-name>
+      <score-instrument id="P3-I36"><instrument-name>Bass Drum 1</instrument-name></score-instrument>
+      <score-instrument id="P3-I39"><instrument-name>Acoustic Snare</instrument-name></score-instrument>
+      <midi-instrument id="P3-I36"><midi-channel>10</midi-channel><midi-program>1</midi-program><midi-unpitched>37</midi-unpitched></midi-instrument>
+      <midi-instrument id="P3-I39"><midi-channel>10</midi-channel><midi-program>1</midi-program><midi-unpitched>39</midi-unpitched></midi-instrument>
+    </score-part>
+  </part-list>
+
+  <!-- A guitar as MuseScore writes one: a notation staff (treble 8vb,
+       written an octave up) and a tablature staff with strings and frets. -->
+  <part id="P1">
+    <measure number="1">
+      <attributes>
+        <divisions>6</divisions>
+        <key><fifths>-1</fifths><mode>minor</mode></key>
+        <time><beats>3</beats><beat-type>4</beat-type></time>
+        <staves>2</staves>
+        <clef number="1"><sign>G</sign><line>2</line><clef-octave-change>-1</clef-octave-change></clef>
+        <clef number="2"><sign>TAB</sign><line>5</line></clef>
+        <staff-details number="2">
+          <staff-lines>6</staff-lines>
+          <staff-tuning line="1"><tuning-step>D</tuning-step><tuning-octave>2</tuning-octave></staff-tuning>
+          <staff-tuning line="2"><tuning-step>A</tuning-step><tuning-octave>2</tuning-octave></staff-tuning>
+          <staff-tuning line="3"><tuning-step>D</tuning-step><tuning-octave>3</tuning-octave></staff-tuning>
+          <staff-tuning line="4"><tuning-step>G</tuning-step><tuning-octave>3</tuning-octave></staff-tuning>
+          <staff-tuning line="5"><tuning-step>B</tuning-step><tuning-octave>3</tuning-octave></staff-tuning>
+          <staff-tuning line="6"><tuning-step>E</tuning-step><tuning-octave>4</tuning-octave></staff-tuning>
+        </staff-details>
+        <transpose><diatonic>0</diatonic><chromatic>0</chromatic><octave-change>-1</octave-change></transpose>
+      </attributes>
+      <direction placement="above">
+        <direction-type><rehearsal>A</rehearsal></direction-type>
+      </direction>
+      <direction placement="above">
+        <direction-type>
+          <metronome><beat-unit>quarter</beat-unit><per-minute>96</per-minute></metronome>
+        </direction-type>
+        <sound tempo="96"/>
+      </direction>
+      <direction placement="below">
+        <direction-type><dynamics><mp/></dynamics></direction-type>
+        <staff>1</staff>
+      </direction>
+      <harmony>
+        <root><root-step>D</root-step></root>
+        <kind text="m">minor</kind>
+        <frame>
+          <frame-strings>6</frame-strings>
+          <frame-frets>4</frame-frets>
+          <frame-note><string>1</string><fret>1</fret></frame-note>
+          <frame-note><string>2</string><fret>3</fret></frame-note>
+          <frame-note><string>3</string><fret>2</fret></frame-note>
+          <frame-note><string>4</string><fret>0</fret></frame-note>
+        </frame>
+      </harmony>
+      <!-- Staff 1, voice 1: a dotted quarter, an eighth, a quarter chord. -->
+      <note>
+        <pitch><step>D</step><octave>4</octave></pitch>
+        <duration>9</duration><tie type="start"/><voice>1</voice><type>quarter</type><dot/><staff>1</staff>
+        <notations><tied type="start"/><slur type="start" number="1"/></notations>
+        <lyric number="1"><syllabic>begin</syllabic><text>Gui</text></lyric>
+      </note>
+      <note>
+        <pitch><step>E</step><octave>4</octave></pitch>
+        <duration>3</duration><voice>1</voice><type>eighth</type><staff>1</staff>
+        <notations><slur type="stop" number="1"/><technical><hammer-on type="start">H</hammer-on></technical></notations>
+        <lyric number="1"><syllabic>end</syllabic><text>tar</text></lyric>
+      </note>
+      <note>
+        <pitch><step>A</step><octave>3</octave></pitch>
+        <duration>6</duration><voice>1</voice><type>quarter</type><staff>1</staff>
+        <notations><articulations><accent/></articulations><fermata type="upright"/></notations>
+        <lyric number="1"><syllabic>single</syllabic><text>song</text></lyric>
+      </note>
+      <note>
+        <chord/>
+        <pitch><step>F</step><octave>4</octave></pitch>
+        <duration>6</duration><voice>1</voice><type>quarter</type><staff>1</staff>
+      </note>
+      <!-- Staff 2: the same notes as tablature. -->
+      <backup><duration>18</duration></backup>
+      <note>
+        <pitch><step>D</step><octave>4</octave></pitch>
+        <duration>9</duration><voice>5</voice><type>quarter</type><dot/><staff>2</staff>
+        <notations><technical><string>4</string><fret>0</fret></technical></notations>
+      </note>
+      <note>
+        <pitch><step>E</step><octave>4</octave></pitch>
+        <duration>3</duration><voice>5</voice><type>eighth</type><staff>2</staff>
+        <notations><technical><string>4</string><fret>2</fret></technical></notations>
+      </note>
+      <note>
+        <pitch><step>A</step><octave>3</octave></pitch>
+        <duration>6</duration><voice>5</voice><type>quarter</type><staff>2</staff>
+        <notations><technical><string>5</string><fret>0</fret></technical></notations>
+      </note>
+      <note>
+        <chord/>
+        <pitch><step>F</step><octave>4</octave></pitch>
+        <duration>6</duration><voice>5</voice><type>quarter</type><staff>2</staff>
+        <notations><technical><string>4</string><fret>3</fret></technical></notations>
+      </note>
+      <barline location="right"><bar-style>light-light</bar-style></barline>
+    </measure>
+    <measure number="2">
+      <barline location="left"><bar-style>heavy-light</bar-style><repeat direction="forward"/></barline>
+      <!-- A triplet, a grace note, a second voice. -->
+      <note>
+        <grace slash="yes"/>
+        <pitch><step>C</step><octave>4</octave></pitch>
+        <voice>1</voice><type>eighth</type><staff>1</staff>
+      </note>
+      <note>
+        <pitch><step>D</step><octave>4</octave></pitch>
+        <duration>2</duration><tie type="stop"/><voice>1</voice><type>eighth</type>
+        <time-modification><actual-notes>3</actual-notes><normal-notes>2</normal-notes></time-modification>
+        <staff>1</staff><notations><tied type="stop"/><tuplet type="start"/></notations>
+      </note>
+      <note>
+        <pitch><step>C</step><alter>1</alter><octave>4</octave></pitch>
+        <duration>2</duration><voice>1</voice><type>eighth</type><accidental>sharp</accidental>
+        <time-modification><actual-notes>3</actual-notes><normal-notes>2</normal-notes></time-modification>
+        <staff>1</staff>
+      </note>
+      <note>
+        <pitch><step>B</step><alter>-1</alter><octave>3</octave></pitch>
+        <duration>2</duration><voice>1</voice><type>eighth</type>
+        <time-modification><actual-notes>3</actual-notes><normal-notes>2</normal-notes></time-modification>
+        <staff>1</staff><notations><tuplet type="stop"/></notations>
+      </note>
+      <note>
+        <rest/>
+        <duration>12</duration><voice>1</voice><type>half</type><staff>1</staff>
+      </note>
+      <backup><duration>18</duration></backup>
+      <forward><duration>6</duration><voice>2</voice><staff>1</staff></forward>
+      <note>
+        <pitch><step>D</step><octave>3</octave></pitch>
+        <duration>12</duration><voice>2</voice><type>half</type><staff>1</staff>
+      </note>
+    </measure>
+    <measure number="3">
+      <barline location="left"><ending number="1" type="start"/></barline>
+      <direction>
+        <direction-type><wedge type="crescendo"/></direction-type><staff>1</staff>
+      </direction>
+      <note>
+        <pitch><step>A</step><octave>3</octave></pitch>
+        <duration>18</duration><voice>1</voice><type>half</type><dot/><staff>1</staff>
+      </note>
+      <direction>
+        <direction-type><wedge type="stop"/></direction-type><staff>1</staff>
+      </direction>
+      <barline location="right"><ending number="1" type="stop"/><repeat direction="backward"/></barline>
+    </measure>
+    <measure number="4">
+      <barline location="left"><ending number="2" type="start"/></barline>
+      <direction>
+        <direction-type><words>let ring</words></direction-type>
+      </direction>
+      <note>
+        <rest measure="yes"/>
+        <duration>18</duration><voice>1</voice><staff>1</staff>
+      </note>
+      <barline location="right"><bar-style>light-heavy</bar-style><ending number="2" type="discontinue"/></barline>
+    </measure>
+  </part>
+
+  <!-- A flute: no strings in the file. -->
+  <part id="P2">
+    <measure number="1">
+      <attributes>
+        <divisions>2</divisions>
+        <key><fifths>-1</fifths><mode>minor</mode></key>
+        <time><beats>3</beats><beat-type>4</beat-type></time>
+        <clef><sign>G</sign><line>2</line></clef>
+      </attributes>
+      <note><pitch><step>A</step><octave>5</octave></pitch><duration>6</duration><voice>1</voice><type>half</type><dot/></note>
+    </measure>
+    <measure number="2">
+      <note><pitch><step>G</step><octave>5</octave></pitch><duration>6</duration><voice>1</voice><type>half</type><dot/></note>
+    </measure>
+    <measure number="3">
+      <note><pitch><step>F</step><octave>5</octave></pitch><duration>6</duration><voice>1</voice><type>half</type><dot/></note>
+    </measure>
+    <measure number="4">
+      <note><rest measure="yes"/><duration>6</duration><voice>1</voice></note>
+    </measure>
+  </part>
+
+  <!-- Drums. -->
+  <part id="P3">
+    <measure number="1">
+      <attributes>
+        <divisions>1</divisions>
+        <time><beats>3</beats><beat-type>4</beat-type></time>
+        <clef><sign>percussion</sign></clef>
+      </attributes>
+      <note><unpitched><display-step>F</display-step><display-octave>4</display-octave></unpitched><duration>1</duration><instrument id="P3-I36"/><voice>1</voice><type>quarter</type></note>
+      <note><unpitched><display-step>C</display-step><display-octave>5</display-octave></unpitched><duration>1</duration><instrument id="P3-I39"/><voice>1</voice><type>quarter</type></note>
+      <note><unpitched><display-step>F</display-step><display-octave>4</display-octave></unpitched><duration>1</duration><instrument id="P3-I36"/><voice>1</voice><type>quarter</type></note>
+    </measure>
+    <measure number="2"><note><rest measure="yes"/><duration>3</duration><voice>1</voice></note></measure>
+    <measure number="3"><note><rest measure="yes"/><duration>3</duration><voice>1</voice></note></measure>
+    <measure number="4"><note><rest measure="yes"/><duration>3</duration><voice>1</voice></note></measure>
+  </part>
+</score-partwise>
