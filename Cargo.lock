@@ -252,7 +252,7 @@ dependencies = [
 
 [[package]]
 name = "oxiguitar-musicxml-plugin"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "musicxml",
  "oxiguitar-model",

@@ -5,7 +5,7 @@
 name = "oxiguitar-musicxml-plugin"
 description = "The OxiGuitar format plugin for MusicXML: reads and writes MusicXML (.musicxml, .xml) and compressed MusicXML (.mxl) files."
 # 0.0.0 until the first release: the Release button makes it 0.1.0.
-version = "0.0.0"
+version = "0.1.0"
 edition = "2024"
 # Rust from rustup, raised only when something needs it (CONTRIBUTING.md).
 rust-version = "1.99"

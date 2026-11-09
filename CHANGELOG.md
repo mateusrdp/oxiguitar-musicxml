@@ -8,6 +8,8 @@ the release notes.
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-09
+
 ### Added
 
 - **The MusicXML plugin** (`musicxml.oxp`, `oxiguitar.musicxml`, #223 in
