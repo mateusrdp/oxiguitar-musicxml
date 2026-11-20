@@ -10,17 +10,21 @@ A part the file marks as a guitar or a bass opens as tablature; when the file ha
 
 ![A test song of ours read from MusicXML, engraved by OxiGuitar](docs/images/test-song.png)
 
-The picture is OxiGuitar engraving [`fixtures/oxiguitar-test.musicxml`](fixtures/oxiguitar-test.musicxml), a file we wrote ourselves: a guitar in Drop D whose frets come from the file's tablature, a chord symbol with its diagram, lyrics, a triplet after a grace note, a second voice, repeats with two endings. The plugin has no sound of its own: it only reads and writes files. What you hear comes from [oxiguitar-midi](https://github.com/mateusrdp/oxiguitar-midi) and an audio output plugin.
+The picture is OxiGuitar engraving [`fixtures/oxiguitar-test.musicxml`](fixtures/oxiguitar-test.musicxml), a file we wrote ourselves: a guitar in Drop D whose frets come from the file's tablature, a chord symbol with its diagram, lyrics, a triplet after a grace note, a second voice, repeats with two endings. The plugin has no sound of its own: it only reads and writes files. What you hear comes from oxiguitar-midi and an audio output plugin.
 
 The file type is decided from the file's contents, never from its extension: OxiGuitar recognises MusicXML by its first element, `score-partwise` or `score-timewise`, and compressed MusicXML by its root file's. That needs OxiGuitar 0.18 or later (plugin interface 1.7).
 
 [docs/design.md](docs/design.md) says what is read and written and what is left out, and why.
 
+## Manual
+
+The manual is at <https://mateusrdp.github.io/oxiguitar-musicxml/>. Its source is in [docs/manual](docs/manual). It covers what the plugin is for, how it works, what it needs and how to install it.
+
 ## Install
 
-Every [release](https://github.com/mateusrdp/oxiguitar-musicxml/releases) holds a zip per system (Linux x86_64 and ARM64, Windows x86_64 and ARM64, macOS), a `.deb` and an `.rpm` for Linux, a per-user installer for Windows (no administrator needed), a `.pkg` for macOS, and a `SHA256SUMS` file. The OxiGuitar manual's [install page](https://mateusrdp.github.io/oxiguitar/installing.html) says which one to use and how to keep plugins updated through your package manager.
+Every [release](https://github.com/mateusrdp/oxiguitar-musicxml/releases) holds a zip per system (Linux x86_64 and ARM64, Windows x86_64 and ARM64, macOS), a `.deb` and an `.rpm` for Linux, a per-user installer for Windows (no administrator needed), a `.pkg` for macOS, and a `SHA256SUMS` file. The [manual's install page](https://mateusrdp.github.io/oxiguitar-musicxml/install.html) says which one to use and how to keep it updated.
 
-You can also copy `musicxml.oxp` from a zip into OxiGuitar's plugin folder by hand ([Settings and plugins](https://mateusrdp.github.io/oxiguitar/plugins.html)).
+You can also copy `musicxml.oxp` from a zip into OxiGuitar's plugin folder by hand ([Installing](https://mateusrdp.github.io/oxiguitar-musicxml/install.html)).
 
 Found a file it reads wrongly? Please [open an issue](https://github.com/mateusrdp/oxiguitar-musicxml/issues/new) with the file if you can share it, and the program that wrote it.
 
@@ -45,7 +49,7 @@ What is where:
 
 ## Releases
 
-The maintainer releases with the Release button in [oxiguitar-packages](https://github.com/mateusrdp/oxiguitar-packages): it bumps the version, merges `develop` into `main` and tags it. [`release.yml`](.github/workflows/release.yml) then builds the plugin for every system with the packages' reusable plugin-release workflow, makes the packages and a draft release; publishing the draft starts [`publish.yml`](.github/workflows/publish.yml), which tells the package repositories. Every pull request gets the same builds as test builds, kept for 14 days under its Release run.
+The maintainer releases with the Release button in oxiguitar-packages: it bumps the version, merges `develop` into `main` and tags it. [`release.yml`](.github/workflows/release.yml) then builds the plugin for every system with the packages' reusable plugin-release workflow, makes the packages and a draft release; publishing the draft starts [`publish.yml`](.github/workflows/publish.yml), which tells the package repositories. Every pull request gets the same builds as test builds, kept for 14 days under its Release run.
 
 ## Licence
 
