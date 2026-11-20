@@ -35,6 +35,7 @@ Rust 1.99 or later from [rustup](https://rustup.rs). The plugin SDK and the scor
 ```sh
 cargo test                  # the reader, the writer, and the plugin as an .oxp file
 ./build-oxp.sh              # dist/musicxml-VERSION-SYSTEM-ARCH.oxp
+python3 scripts/test-all.py --corpus DIR   # every test on your own files, as the manual's Testing page says
 ```
 
 `cargo test` reads and writes our own file, damaged files and the edge cases in `tests/`, then builds the plugin as the `.oxp` file we ship and checks it through OxiGuitar's own plugin host (the contract suite of `oxiguitar-plugin-test`). With MusicXML files of a private collection unpacked into `corpus/files/` (never committed), `cargo test --test corpus` round-trips each of them. [CONTRIBUTING.md](CONTRIBUTING.md) has the rest of the rules.

@@ -1,52 +1,118 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2026 Mateus Rocha de Paula and the OxiGuitar contributors
 
-//! The private test corpus, when it is here (never committed): every
-//! MusicXML file in `corpus/files/` reads, writes and reads back the same.
-//! `cargo test --test corpus -- --nocapture` locally; with no corpus it
-//! checks nothing.
+//! The test corpus (`tests/support/corpus.rs`: `OXIGUITAR_CORPUS`, or
+//! `corpus/files/`; never committed): every MusicXML file in it, plain or
+//! compressed, recognised by its contents as the manifest's signatures do,
+//! reads, writes and reads back the same. Any other file is left alone.
+//! `cargo test --test corpus -- --nocapture`; with no corpus it checks
+//! nothing (unless `OXIGUITAR_CORPUS_REQUIRED` is set).
 
+#[path = "support/corpus.rs"]
+mod corpus;
+
+use std::io::Read;
+use std::path::Path;
+
+use corpus::Outcome;
 use oxiguitar_model::wire;
 
-#[test]
-fn every_corpus_file_round_trips() {
-    let dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("corpus/files");
-    let Ok(entries) = std::fs::read_dir(&dir) else {
-        println!("no corpus in {}", dir.display());
-        return;
+/// The XML's root is a MusicXML score.
+fn musicxml_root(text: &[u8]) -> bool {
+    let head = &text[..text.len().min(64 * 1024)];
+    let head = head.strip_prefix(b"\xef\xbb\xbf").unwrap_or(head);
+    let head = String::from_utf8_lossy(head);
+    head.trim_start().starts_with('<')
+        && (head.contains("<score-partwise") || head.contains("<score-timewise"))
+}
+
+/// A compressed MusicXML file: a ZIP whose `META-INF/container.xml` names
+/// a root file that is a MusicXML score (a MuseScore file is a ZIP with a
+/// container too, but its root file isn't one).
+fn compressed_musicxml(data: &[u8]) -> bool {
+    let Ok(mut zip) = zip::ZipArchive::new(std::io::Cursor::new(data)) else {
+        return false;
     };
-    let mut checked = 0;
-    for e in entries.flatten() {
-        let path = e.path();
-        let ext = path
-            .extension()
-            .and_then(|e| e.to_str())
-            .unwrap_or("")
-            .to_lowercase();
-        if !matches!(ext.as_str(), "musicxml" | "xml" | "mxl") {
-            continue;
-        }
-        let data = std::fs::read(&path).unwrap();
-        let read = oxiguitar_musicxml_plugin::read(&data)
-            .unwrap_or_else(|e| panic!("{}: {e}", path.display()));
-        println!("{}: {} log entries", path.display(), read.log.len());
-        // Exact when the writer named no losses; otherwise what it wrote
-        // writes and reads back the same from then on.
-        let written = oxiguitar_musicxml_plugin::write(&read.score, false).unwrap();
-        let again = oxiguitar_musicxml_plugin::read(&written.data).unwrap();
+    let mut container = String::new();
+    let Ok(mut entry) = zip.by_name("META-INF/container.xml") else {
+        return false;
+    };
+    if entry.read_to_string(&mut container).is_err() {
+        return false;
+    }
+    drop(entry);
+    let Some(root) = container
+        .split("full-path=\"")
+        .nth(1)
+        .and_then(|rest| rest.split('"').next())
+    else {
+        return false;
+    };
+    let Ok(member) = zip.by_name(root) else {
+        return false;
+    };
+    let mut head = Vec::new();
+    member.take(64 * 1024).read_to_end(&mut head).is_ok() && musicxml_root(&head)
+}
+
+fn is_musicxml(data: &[u8]) -> bool {
+    if data.starts_with(b"PK") {
+        compressed_musicxml(data)
+    } else {
+        musicxml_root(data)
+    }
+}
+
+/// One file: exact when the writer named no losses; otherwise what it
+/// wrote writes and reads back the same from then on. Plain and compressed.
+fn round_trip(data: &[u8]) -> Result<Outcome, String> {
+    if !is_musicxml(data) {
+        return Ok(Outcome::NotTaken);
+    }
+    let read = oxiguitar_musicxml_plugin::read(data).map_err(|e| format!("doesn't read: {e}"))?;
+    for compressed in [false, true] {
+        let written = oxiguitar_musicxml_plugin::write(&read.score, compressed)
+            .map_err(|e| format!("doesn't write (compressed: {compressed}): {e}"))?;
+        let again = oxiguitar_musicxml_plugin::read(&written.data)
+            .map_err(|e| format!("what it wrote doesn't read (compressed: {compressed}): {e}"))?;
         let (expected, got) = if written.losses.is_empty() {
-            (read.score, again.score)
+            (read.score.clone(), again.score)
         } else {
-            let third = oxiguitar_musicxml_plugin::write(&again.score, false).unwrap();
-            let third = oxiguitar_musicxml_plugin::read(&third.data).unwrap();
+            let third = oxiguitar_musicxml_plugin::write(&again.score, compressed)
+                .map_err(|e| format!("doesn't write a second time: {e}"))?;
+            let third = oxiguitar_musicxml_plugin::read(&third.data)
+                .map_err(|e| format!("the second writing doesn't read: {e}"))?;
             (again.score, third.score)
         };
-        assert!(
-            wire::from_wire2(got).unwrap() == wire::from_wire2(expected).unwrap(),
-            "{} doesn't round-trip",
-            path.display()
-        );
-        checked += 1;
+        let expected = wire::from_wire2(expected).map_err(|e| e.to_string())?;
+        let got = wire::from_wire2(got).map_err(|e| e.to_string())?;
+        if expected != got {
+            return Err(format!(
+                "doesn't round-trip (compressed: {compressed}; {} losses named)",
+                written.losses.len()
+            ));
+        }
     }
-    println!("{checked} files");
+    Ok(Outcome::Passed)
+}
+
+#[test]
+fn every_corpus_musicxml_file_round_trips() {
+    let fallback = Path::new(env!("CARGO_MANIFEST_DIR")).join("corpus/files");
+    corpus::check("musicxml round trip", &fallback, |_, data| round_trip(data));
+}
+
+/// The picking itself, on files made here: what the signatures take and
+/// what they leave.
+#[test]
+fn musicxml_is_recognised_by_its_contents() {
+    assert!(is_musicxml(
+        b"\xef\xbb\xbf<?xml version=\"1.0\"?>\n<!DOCTYPE score-partwise>\n<score-partwise/>"
+    ));
+    assert!(is_musicxml(b"<score-timewise version=\"4.0\"/>"));
+    assert!(!is_musicxml(b"<museScore version=\"4.70\"/>"));
+    assert!(!is_musicxml(b"MThd\0\0\0\x06"));
+    let compressed = oxiguitar_musicxml_plugin::write(&Default::default(), true).unwrap();
+    assert!(is_musicxml(&compressed.data));
+    assert!(!is_musicxml(b"PK\x03\x04 not a zip"));
 }
