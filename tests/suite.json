@@ -1,0 +1,10 @@
+{
+  "repository": "mateusrdp/oxiguitar-musicxml",
+  "plugins": [
+    {"name": "musicxml", "package": "oxiguitar-musicxml-plugin", "library": "oxiguitar_musicxml_plugin"}
+  ],
+  "corpus": {
+    "uses": true,
+    "through_core": {"extensions": ["musicxml", "mxl"], "write_as": ["musicxml", "mxl"], "readers": ["guitarpro"]}
+  }
+}
