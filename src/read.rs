@@ -263,6 +263,7 @@ impl<'a> Reader<'a> {
             for staff in &mut track.staves {
                 while staff.bars.len() < bars {
                     staff.bars.push(Bar {
+                        plugins: Default::default(),
                         clef: staff.bars.last().map_or(Clef::Treble, |b| b.clef),
                         voices: vec![Voice::default()],
                         simile: None,
@@ -289,6 +290,8 @@ impl<'a> Reader<'a> {
             }
         }
         Score {
+            plugins: Default::default(),
+            track_bar_colors: Default::default(),
             info,
             initial_tempo,
             tempo_label,
@@ -1532,6 +1535,8 @@ impl<'a> Reader<'a> {
         // staff's first voice of each bar, and the lyrics.
         let lyrics = Self::place_marks(&mut staves, raw);
         Track {
+            chords_from: Default::default(),
+            chords_voice_index: Default::default(),
             name: if info.name.is_empty() {
                 format!("Track {}", part + 1)
             } else {
@@ -1660,6 +1665,7 @@ impl<'a> Reader<'a> {
         }
         // Fermatas read on this measure's notes: at their beats' starts.
         Bar {
+            plugins: Default::default(),
             clef,
             voices,
             simile: None,
@@ -1698,6 +1704,7 @@ impl<'a> Reader<'a> {
             effects = NoteEffects::default();
         }
         Note {
+            plugins: Default::default(),
             place,
             tie: n.tie || continued,
             dynamic: n.dynamic,
