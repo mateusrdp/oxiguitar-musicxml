@@ -5,7 +5,7 @@
 name = "oxiguitar-musicxml-plugin"
 description = "The OxiGuitar format plugin for MusicXML: reads and writes MusicXML (.musicxml, .xml) and compressed MusicXML (.mxl) files."
 # 0.0.0 until the first release: the Release button makes it 0.1.0.
-version = "0.1.1"
+version = "0.2.0"
 edition = "2024"
 # Rust from rustup, raised only when something needs it (CONTRIBUTING.md).
 rust-version = "1.99"
@@ -29,8 +29,10 @@ oxp = []
 # OxiGuitar 0.18.0 (oxiguitar#253) is the first release with it.
 # Nothing of OxiGuitar's is on crates.io. The reader reads into the core's
 # model and converts it for the plugin interface.
-oxiguitar-plugin = { git = "https://github.com/mateusrdp/oxiguitar", tag = "v0.18.0" }
-oxiguitar-model = { git = "https://github.com/mateusrdp/oxiguitar", tag = "v0.18.0", features = ["wire"] }
+# Now at v0.23.0 (plugin interface 1.16; plugin files are tar archives,
+# mateusrdp/oxiguitar#347).
+oxiguitar-plugin = { git = "https://github.com/mateusrdp/oxiguitar", tag = "v0.23.0" }
+oxiguitar-model = { git = "https://github.com/mateusrdp/oxiguitar", tag = "v0.23.0", features = ["wire"] }
 # MusicXML 4.0, read and written as typed elements (Mateus, 8 Nov 2026:
 # this library, as MusicXML 4.0 is the latest release). Exactly as
 # published; its own ZIP reader is not used (see src/mxl.rs).
@@ -42,7 +44,7 @@ zip = { version = "9", default-features = false, features = ["deflate-flate2-zli
 [dev-dependencies]
 # The contract suite (tests/contract.rs): builds the .oxp file and checks it
 # through OxiGuitar's own plugin host.
-oxiguitar-plugin-test = { git = "https://github.com/mateusrdp/oxiguitar", tag = "v0.18.0" }
+oxiguitar-plugin-test = { git = "https://github.com/mateusrdp/oxiguitar", tag = "v0.23.0" }
 serde_json = "1"
 
 # Plugins deny `unsafe` rather than forbid it: `export_plugin!` allows it on

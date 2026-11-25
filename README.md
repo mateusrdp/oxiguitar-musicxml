@@ -2,6 +2,8 @@
 
 The MusicXML plugin for [OxiGuitar](https://github.com/mateusrdp/oxiguitar), a free, open-source guitar tablature and score viewer, editor and player for Windows, macOS and Linux. MusicXML is the format notation programs exchange scores in: with this plugin OxiGuitar opens what MuseScore, Finale, Sibelius, Dorico or Guitar Pro export, and saves scores they can open.
 
+In plain words: every notation program has its own file format, and MusicXML is the common language they use to swap scores. It is an XML text format, maintained by a W3C community group, and `.mxl` is the same packed in a ZIP. The [manual](https://mateusrdp.github.io/oxiguitar-musicxml/) explains what survives the trip.
+
 | Plugin file | Id | Reads | Writes |
 | --- | --- | --- | --- |
 | `musicxml.oxp` | `oxiguitar.musicxml` | MusicXML (.musicxml, .xml) and compressed MusicXML (.mxl) | both |
@@ -35,6 +37,7 @@ Rust 1.99 or later from [rustup](https://rustup.rs). The plugin SDK and the scor
 ```sh
 cargo test                  # the reader, the writer, and the plugin as an .oxp file
 ./build-oxp.sh              # dist/musicxml-VERSION-SYSTEM-ARCH.oxp
+python3 scripts/test-all.py --corpus DIR   # every test on your own files, as the manual's Testing page says
 ```
 
 `cargo test` reads and writes our own file, damaged files and the edge cases in `tests/`, then builds the plugin as the `.oxp` file we ship and checks it through OxiGuitar's own plugin host (the contract suite of `oxiguitar-plugin-test`). With MusicXML files of a private collection unpacked into `corpus/files/` (never committed), `cargo test --test corpus` round-trips each of them. [CONTRIBUTING.md](CONTRIBUTING.md) has the rest of the rules.
@@ -50,6 +53,10 @@ What is where:
 ## Releases
 
 The maintainer releases with the Release button in oxiguitar-packages: it bumps the version, merges `develop` into `main` and tags it. [`release.yml`](.github/workflows/release.yml) then builds the plugin for every system with the packages' reusable plugin-release workflow, makes the packages and a draft release; publishing the draft starts [`publish.yml`](.github/workflows/publish.yml), which tells the package repositories. Every pull request gets the same builds as test builds, kept for 14 days under its Release run.
+
+## Credits
+
+Reading and writing by the [musicxml](https://github.com/hedgetechllc/musicxml) library (Will Hedgecock, MIT), archives by [zip](https://github.com/zip-rs/zip2) with [zlib-rs](https://github.com/trifectatechfoundation/zlib-rs). Built on OxiGuitar's plugin SDK. MusicXML was created by Michael Good and Recordare and is maintained by the W3C Music Notation Community Group. The manual's [Credits](https://mateusrdp.github.io/oxiguitar-musicxml/credits.html) page lists every project with its authors and licence. Thank you to all of them.
 
 ## Licence
 
